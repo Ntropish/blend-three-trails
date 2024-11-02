@@ -1,7 +1,7 @@
 import { Mesh, Light } from "three";
 import { GLTF } from "three-stdlib";
 
-export type GLTFResult = GLTF & {
+export type Trail1Export = GLTF & {
   nodes: {
     Terrain: Mesh;
     SouthCameraTrack: Mesh;

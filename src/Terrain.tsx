@@ -1,22 +1,27 @@
 import { useGLTF } from "@react-three/drei";
-import { Mesh } from "three";
-import { GLTF } from "three-stdlib";
+import { Trail1Export } from "./blends/trail_1.types";
+import { useMemo } from "react";
+import {
+  TextureLoader,
+  Vector2,
+  Vector3,
+  DoubleSide,
+  ShaderMaterial,
+} from "three";
+import { useLoader, useThree } from "@react-three/fiber";
+import { BasicTerrainMaterial } from "./BasicTerrainMaterial";
 
-type GLTFResult = GLTF & {
-  nodes: {
-    Terrain: Mesh;
-  };
-};
+export function Terrain() {
+  const { nodes } = useGLTF("/trail_1.export.glb") as unknown as Trail1Export;
 
-export function Terrain({}) {
-  const { nodes } = useGLTF("/trail_1_terrain.glb") as unknown as GLTFResult;
+  console.log(nodes);
 
   const geometry = nodes.Terrain.geometry;
 
   return (
     <>
       <mesh castShadow receiveShadow geometry={geometry}>
-        <meshStandardMaterial color={"hsla(130, 60%, 70%, 1)"} />
+        <BasicTerrainMaterial />
       </mesh>
     </>
   );

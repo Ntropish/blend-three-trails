@@ -1,9 +1,10 @@
 import { CameraControls } from "@react-three/drei";
 import "./App.css";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Terrain } from "./Terrain";
 
-import { Container, Box } from "@mui/material";
+import { Container, Box, Paper } from "@mui/material";
+import CameraTrack from "./CameraTrack";
 function App() {
   return (
     <Container
@@ -13,10 +14,11 @@ function App() {
         display: "flex",
       }}
     >
-      <Box
+      <Paper
+        elevation={3}
         sx={{
-          width: "100%",
-          height: "100%",
+          my: 1,
+          flex: "1 1 auto",
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
@@ -30,21 +32,22 @@ function App() {
             width: "100%",
           }}
         >
+          <CameraTrack />
           <ambientLight
-            intensity={0.8}
+            intensity={1.0}
             // diffuse sky blue
-            color="hsla(200, 100%, 50%, 0.9)"
+            color="hsla(200, 100%, 70%, 0.9)"
           />
           <directionalLight
             position={[-5, 5, -5]}
             rotation={[Math.PI / 2 + Math.PI / 4, Math.PI / 4, 0]}
             color="hsla(40, 70%, 50%, 1)"
-            intensity={10}
+            intensity={20}
           />
           <Terrain />
           <CameraControls makeDefault />
         </Canvas>
-      </Box>
+      </Paper>
     </Container>
   );
 }
