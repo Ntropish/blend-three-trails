@@ -3,6 +3,8 @@ import "./App.css";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { Terrain } from "./Terrain";
 
+import { Sky } from "@react-three/drei";
+
 import { Container, Box, Paper } from "@mui/material";
 import CameraTrack from "./CameraTrack";
 function App() {
@@ -32,6 +34,15 @@ function App() {
             width: "100%",
           }}
         >
+          <fog attach="fog" args={["hsl(210, 100%, 80%)", -10, 95]} />
+          <Sky
+            distance={450000}
+            sunPosition={[-5, 5, -5]}
+            inclination={0}
+            azimuth={0.25}
+            turbidity={2}
+            rayleigh={0.2}
+          />
           <CameraTrack />
           <ambientLight
             intensity={1.0}
