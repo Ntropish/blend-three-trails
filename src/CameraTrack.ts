@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef } from "react";
 import { useGLTF } from "@react-three/drei";
 import { Trail1Export } from "./blends/trail_1.types";
 
-import { CatmullRomCurve3, Vector3 } from "three";
+import { CatmullRomCurve3, PerspectiveCamera, Vector3 } from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useSceneStore } from "./SceneStore";
 
@@ -22,30 +22,37 @@ export default function CameraTrack() {
     return new CatmullRomCurve3(pointsArray, false, "chordal", 0.0001);
   }, [nodes]);
 
-  const camera = useThree((state) => state.camera);
+  const camera = useThree((state) => state.camera as PerspectiveCamera);
+
+  const offset = useSceneStore((state) => state.offset);
+  const verticalLook = useSceneStore((state) => state.verticalLook);
 
   // Utility to set the camera position
   const setCameraPosition = useCallback(
     (progress: number) => {
-      const position = cameraTrack.getPointAt(progress);
+      const position = cameraTrack.getPointAt(0.1 + progress * 0.8);
 
-      // move up and back
-      position.y += 4;
-      position.z += 7;
+      position.add(offset);
 
       camera.position.copy(position);
 
-      camera.lookAt(position.x, position.y - 0.1, position.z - 1);
+      camera.lookAt(position.x, position.y + verticalLook, position.z - 1);
 
       camera.up.set(0, 1, 0);
     },
-    [camera, cameraTrack]
+    [camera, cameraTrack, offset, verticalLook]
   );
 
   // effect to set the initial camera position
   useEffect(() => {
     setCameraPosition(useSceneStore.getState().progress);
   }, [setCameraPosition]);
+
+  // effect to update on progress change
+  const progress = useSceneStore((state) => state.progress);
+  useEffect(() => {
+    setCameraPosition(progress);
+  }, [progress, setCameraPosition]);
 
   const previousTime = useRef(0);
   useFrame(({ clock }) => {
@@ -58,24 +65,20 @@ export default function CameraTrack() {
     const normalizedProgress = difference / useSceneStore.getState().period;
 
     useSceneStore.setState((state) => {
-      // modulate the progress to loop
       state.progress = (state.progress + normalizedProgress) % 1;
     });
-
-    const progress = useSceneStore.getState().progress;
-
-    const position = cameraTrack.getPointAt(progress);
-
-    // move up and back
-    position.y += 4;
-    position.z += 7;
-
-    camera.position.copy(position);
-
-    camera.lookAt(position.x, position.y - 0.1, position.z - 1);
-
-    camera.up.set(0, 1, 0);
   });
+
+  const fov = useSceneStore((state) => state.fov);
+  const focusDistance = useSceneStore((state) => state.focusDistance);
+  const focalLength = useSceneStore((state) => state.focalLength);
+  const bokehScale = useSceneStore((state) => state.bokehScale);
+
+  // effect to update fov
+  useEffect(() => {
+    camera.fov = fov;
+    camera.updateProjectionMatrix();
+  }, [camera, fov]);
 
   return null;
 }

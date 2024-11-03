@@ -20,6 +20,7 @@ import {
 import { Camera } from "three";
 import { PerspectiveCamera } from "three";
 import { KernelSize } from "postprocessing";
+import { useSceneStore } from "./SceneStore";
 
 type CinematicStyle = {
   fov: number;
@@ -88,24 +89,29 @@ const cinematicModes: Record<string, CinematicStyle> = {
 export const CinematicModeKeys = Object.keys(cinematicModes);
 
 export default function CinematicMode({ mode }: { mode: string }) {
-  const {
-    fov,
-    focusDistance,
-    focalLength,
-    bokehScale,
-    glare,
-    vignette,
-    chromaticAberration,
-  } = cinematicModes[mode];
+  // const {
+  //   fov,
+  //   focusDistance,
+  //   focalLength,
+  //   bokehScale,
+  //   glare,
+  //   vignette,
+  //   chromaticAberration,
+  // } = cinematicModes[mode];
 
   const camera = useThree((state) => state.camera) as PerspectiveCamera;
 
-  React.useEffect(() => {
-    camera.fov = fov;
-    camera.zoom = 1;
-    camera.updateProjectionMatrix();
-  }, [camera, fov]);
+  // React.useEffect(() => {
+  //   camera.fov = fov;
+  //   camera.zoom = 1;
+  //   camera.updateProjectionMatrix();
+  // }, [camera, fov]);
 
+  const focusDistance = useSceneStore((state) => state.focusDistance);
+  const focalLength = useSceneStore((state) => state.focalLength);
+  const bokehScale = useSceneStore((state) => state.bokehScale);
+
+  const bloomIntensity = useSceneStore((state) => state.bloomIntensity);
   return (
     <EffectComposer>
       <DepthOfField
@@ -116,21 +122,17 @@ export default function CinematicMode({ mode }: { mode: string }) {
         focalLength={focalLength}
         bokehScale={bokehScale}
       />
-      {typeof glare === "number" ? (
-        <Bloom
-          // intensity={1.0} // The bloom intensity.
-          // blurPass={undefined} // A blur pass.
-          // kernelSize={KernelSize.LARGE} // blur kernel size
-          luminanceThreshold={0.9} // luminance threshold. Raise this value to mask out darker elements in the scene.
-          // luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
-          // mipmapBlur={false} // Enables or disables mipmap blur.
-          // resolutionX={Resolution.AUTO_SIZE} // The horizontal resolution.
-          // resolutionY={Resolution.AUTO_SIZE} // The vertical resolution.
-          intensity={glare}
-        />
-      ) : (
-        <></>
-      )}
+
+      <Bloom
+        intensity={bloomIntensity}
+        // blurPass={undefined} // A blur pass.
+        // kernelSize={KernelSize.LARGE} // blur kernel size
+        luminanceThreshold={0.8} // luminance threshold. Raise this value to mask out darker elements in the scene.
+        // luminanceSmoothing={0.025} // smoothness of the luminance threshold. Range is [0, 1]
+        // mipmapBlur={false} // Enables or disables mipmap blur.
+        // resolutionX={Resolution.AUTO_SIZE} // The horizontal resolution.
+        // resolutionY={Resolution.AUTO_SIZE} // The vertical resolution.
+      />
     </EffectComposer>
   );
 }
