@@ -15,9 +15,10 @@ export function Terrain() {
       <primitive object={nodes.mountain_1} />
       <primitive object={nodes.mountain_2} />
       <primitive object={nodes.mountain_3} />
-      <mesh castShadow receiveShadow geometry={terrainGeometry}>
+      <primitive object={nodes.Terrain} />
+      {/* <mesh castShadow receiveShadow geometry={terrainGeometry}>
         <BasicTerrainMaterial />
-      </mesh>
+      </mesh> */}
     </>
   );
 }
