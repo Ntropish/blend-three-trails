@@ -24,6 +24,7 @@ function App() {
           display: "flex",
           justifyContent: "center",
           alignItems: "center",
+          overflow: "hidden",
         }}
       >
         <Canvas
@@ -34,7 +35,7 @@ function App() {
             width: "100%",
           }}
         >
-          <fog attach="fog" args={["hsl(210, 100%, 80%)", -10, 95]} />
+          <fog attach="fog" args={["hsl(210, 100%, 70%)", -100, 250]} />
           <Sky
             distance={450000}
             sunPosition={[-5, 5, -5]}
@@ -45,15 +46,15 @@ function App() {
           />
           <CameraTrack />
           <ambientLight
-            intensity={1.0}
+            intensity={0.2}
             // diffuse sky blue
             color="hsla(200, 100%, 70%, 0.9)"
           />
           <directionalLight
-            position={[-5, 5, -5]}
+            position={[-5, 2, 1]}
             rotation={[Math.PI / 2 + Math.PI / 4, Math.PI / 4, 0]}
-            color="hsla(40, 70%, 50%, 1)"
-            intensity={20}
+            color="hsla(40, 70%, 70%, 1)"
+            intensity={5}
           />
           <Terrain />
           <CameraControls makeDefault />

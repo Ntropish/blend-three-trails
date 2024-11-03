@@ -1,14 +1,6 @@
 import { useGLTF } from "@react-three/drei";
 import { Trail1Export } from "./blends/trail_1.types";
-import { useMemo } from "react";
-import {
-  TextureLoader,
-  Vector2,
-  Vector3,
-  DoubleSide,
-  ShaderMaterial,
-} from "three";
-import { useLoader, useThree } from "@react-three/fiber";
+
 import { BasicTerrainMaterial } from "./BasicTerrainMaterial";
 
 export function Terrain() {
@@ -16,11 +8,14 @@ export function Terrain() {
 
   console.log(nodes);
 
-  const geometry = nodes.Terrain.geometry;
+  const terrainGeometry = nodes.Terrain.geometry;
 
   return (
     <>
-      <mesh castShadow receiveShadow geometry={geometry}>
+      <primitive object={nodes.mountain_1} />
+      <primitive object={nodes.mountain_2} />
+      <primitive object={nodes.mountain_3} />
+      <mesh castShadow receiveShadow geometry={terrainGeometry}>
         <BasicTerrainMaterial />
       </mesh>
     </>
