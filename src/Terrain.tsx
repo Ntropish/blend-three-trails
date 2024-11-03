@@ -15,6 +15,7 @@ export function Terrain() {
       <primitive object={nodes.mountain_1} />
       <primitive object={nodes.mountain_2} />
       <primitive object={nodes.mountain_3} />
+      <primitive object={nodes.Tree} />
       <primitive object={nodes.Terrain} />
       {/* <mesh castShadow receiveShadow geometry={terrainGeometry}>
         <BasicTerrainMaterial />

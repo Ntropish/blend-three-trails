@@ -38,12 +38,12 @@ function App() {
             width: "100%",
           }}
         >
-          <fog attach="fog" args={["hsla(215, 100%, 75%, 0.01)", -10, 280]} />
+          <fog attach="fog" args={["hsla(205, 100%, 75%, 0.01)", -10, 280]} />
           <EffectComposer>
             <DepthOfField
               focusDistance={0.015} // where to focus
               focalLength={0.02} // focal length
-              bokehScale={1.5} // bokeh size
+              bokehScale={1} // bokeh size
             />
           </EffectComposer>
           <Sky
@@ -56,16 +56,16 @@ function App() {
           />
           <CameraTrack />
           <ambientLight
-            intensity={0.5}
+            intensity={0.9}
             // diffuse sky blue
             color="hsla(200, 100%, 70%, 0.9)"
           />
-          <directionalLight
+          {/* <directionalLight
             position={[5, 5, 2]}
             rotation={[Math.PI / 2 + Math.PI / 4, Math.PI / 4, 0]}
             color="hsla(40, 80%, 80%, 1)"
-            intensity={2}
-          />
+            intensity={2.5}
+          /> */}
           <Terrain />
         </Canvas>
       </Paper>

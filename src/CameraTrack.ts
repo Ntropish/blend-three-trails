@@ -52,7 +52,7 @@ export default function CameraTrack() {
     );
 
     // move up and back
-    position.y += 5;
+    position.y += 4;
     position.z += 7;
 
     camera.position.copy(position);
