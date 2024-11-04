@@ -19,17 +19,17 @@ export type SceneStore = {
 };
 
 export const useSceneStore = create<SceneStore>(() => ({
-  progress: 0.5,
+  progress: 0.0,
   speedMultiplier: 1,
   isPlaying: false,
-  period: 270,
-  offset: new Vector3(0, 3, 7),
-  verticalLook: -0.2,
+  period: 360,
+  offset: new Vector3(0, 4, 7),
+  verticalLook: -0.27,
   fov: 50,
   zoom: 1,
-  focusDistance: 0.015,
-  focalLength: 0.02,
-  bokehScale: 1,
+  focusDistance: 20,
+  focalLength: 100,
+  bokehScale: 2,
   bloomIntensity: 1,
   chromaticAberationLength: 0.001,
 }));

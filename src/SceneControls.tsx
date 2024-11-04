@@ -221,7 +221,7 @@ export const SceneControls = () => {
           value={focusDistance}
           min={0}
           step={0.001}
-          max={1}
+          max={300}
           onChange={(e, value) => {
             useSceneStore.setState({ focusDistance: value as number });
           }}
@@ -232,14 +232,14 @@ export const SceneControls = () => {
 
       <Box>
         <Typography id="focal-length-slider" gutterBottom>
-          Focal Length
+          Focal Range
         </Typography>
         <Slider
           track={false}
           value={focalLength}
           min={0}
           step={0.001}
-          max={1}
+          max={300}
           onChange={(e, value) => {
             useSceneStore.setState({ focalLength: value as number });
           }}

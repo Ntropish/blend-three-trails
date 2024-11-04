@@ -52,7 +52,7 @@ function App() {
               width: "100%",
             }}
           >
-            <fog attach="fog" args={["hsla(205, 100%, 70%, 0.01)", -10, 320]} />
+            <fog attach="fog" args={["hsla(205, 100%, 70%, 0.01)", -10, 520]} />
             <CinematicMode />
             <Sky
               distance={450000}

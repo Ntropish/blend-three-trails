@@ -34,17 +34,20 @@ export default function CinematicMode() {
     (state) => state.chromaticAberationLength
   );
 
+  console.log(focalLength);
+
   return (
     <EffectComposer>
-      <DepthOfField
-        focusDistance={focusDistance}
-        focalLength={focalLength}
-        bokehScale={bokehScale}
-      />
-
-      <Bloom
+      {/* <Bloom
         intensity={bloomIntensity}
         luminanceThreshold={0.9} // luminance threshold. Raise this value to mask out darker elements in the scene.
+      /> */}
+      <DepthOfField
+        // focusDistance={focusDistance}
+        // focalLength={focalLength}
+        bokehScale={bokehScale}
+        worldFocusDistance={focusDistance}
+        worldFocusRange={focalLength}
       />
 
       <ChromaticAberration
