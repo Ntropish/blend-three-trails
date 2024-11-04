@@ -7,6 +7,7 @@ export type Trail1Export = GLTF & {
     Track: Mesh;
     BlueLight: Light;
     Tree: Mesh;
+    Sky: Mesh;
     mountain_1: Mesh;
     mountain_2: Mesh;
     mountain_3: Mesh;

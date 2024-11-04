@@ -30,7 +30,7 @@ export default function CameraTrack() {
   // Utility to set the camera position
   const setCameraPosition = useCallback(
     (progress: number) => {
-      const position = cameraTrack.getPointAt(0.1 + progress * 0.8);
+      const position = cameraTrack.getPointAt(0.2 + progress * 0.6);
 
       position.add(offset);
 
@@ -65,11 +65,12 @@ export default function CameraTrack() {
     const normalizedProgress = difference / useSceneStore.getState().period;
 
     useSceneStore.setState((state) => {
-      state.progress = (state.progress + normalizedProgress) % 1;
+      return { progress: (state.progress + normalizedProgress) % 1 };
     });
   });
 
   const fov = useSceneStore((state) => state.fov);
+  const zoom = useSceneStore((state) => state.zoom);
   const focusDistance = useSceneStore((state) => state.focusDistance);
   const focalLength = useSceneStore((state) => state.focalLength);
   const bokehScale = useSceneStore((state) => state.bokehScale);
@@ -79,6 +80,12 @@ export default function CameraTrack() {
     camera.fov = fov;
     camera.updateProjectionMatrix();
   }, [camera, fov]);
+
+  // effect to update zoom
+  useEffect(() => {
+    camera.zoom = zoom;
+    camera.updateProjectionMatrix();
+  }, [camera, zoom]);
 
   return null;
 }
